@@ -3,19 +3,42 @@ import { Link as RouterLink, Outlet } from "react-router-dom";
 import { AiOutlineMail, AiFillGithub, AiOutlineRight } from "react-icons/ai";
 import { Button } from "@chakra-ui/button";
 import { Image } from "@chakra-ui/image";
+import { useEffect, useState } from "react";
+
+import ToTopBtn from "./ToTopButton";
 
 export default function Root() {
+	const [toTopButton, setToTopButton] = useState(() =>
+		window.scrollY == 0 ? false : true
+	);
+
+	useEffect(() => {
+		const handleToTopButton = () => {
+			if (window.scrollY == 0) {
+				setToTopButton(false);
+			} else {
+				setToTopButton(true);
+			}
+		};
+
+		window.addEventListener("scroll", handleToTopButton);
+		return () => {
+			window.removeEventListener("scroll", handleToTopButton);
+		};
+	}, []);
+
 	return (
-		<Box>
+		<Box position={"relative"}>
 			<HStack
 				justifyContent={"space-between"}
 				py={4}
 				px={10}
 				borderBottomWidth={1}
-				position={"sticky"}
+				position={"fixed"}
 				top={0}
 				zIndex={"sticky"}
 				bg={"white"}
+				width={"100vw"}
 			>
 				<Box>
 					<RouterLink to={"/"}>
@@ -30,6 +53,7 @@ export default function Root() {
 					</RouterLink>
 				</HStack>
 			</HStack>
+			<ToTopBtn visible={toTopButton} />
 			<Outlet />
 			<HStack
 				justifyContent={"space-around"}
@@ -57,24 +81,20 @@ export default function Root() {
 					<Heading fontSize="xl">Navigate</Heading>
 					<HStack spacing={10}>
 						<VStack fontSize={"sm"} maxW={"max-content"}>
-							<Link>
-								<RouterLink to={"/"}>
-									<HStack spacing={0.5}>
-										<Text>Home</Text>
-										<AiOutlineRight size={10} />
-									</HStack>
-								</RouterLink>
-							</Link>
+							<RouterLink to={"/"}>
+								<HStack spacing={0.5}>
+									<Text>Home</Text>
+									<AiOutlineRight size={10} />
+								</HStack>
+							</RouterLink>
 						</VStack>
 						<VStack fontSize={"sm"} maxW={"max-content"}>
-							<Link>
-								<RouterLink to={"/order"}>
-									<HStack spacing={0.5}>
-										<Text>Order</Text>
-										<AiOutlineRight size={10} />
-									</HStack>
-								</RouterLink>
-							</Link>
+							<RouterLink to={"/order"}>
+								<HStack spacing={0.5}>
+									<Text>Order</Text>
+									<AiOutlineRight size={10} />
+								</HStack>
+							</RouterLink>
 						</VStack>
 					</HStack>
 				</VStack>

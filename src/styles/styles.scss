@@ -1,0 +1,17 @@
+* {
+	scroll-behavior: smooth;
+}
+
+@keyframes motion {
+	0% {
+		margin-bottom: 0px;
+	}
+	100% {
+		margin-bottom: 10px;
+	}
+}
+
+#DownCircle {
+	animation: motion 0.4s linear 0s infinite alternate;
+	margin-bottom: 0;
+}
