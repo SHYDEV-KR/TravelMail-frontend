@@ -1,16 +1,23 @@
-import { Button } from "@chakra-ui/button";
+import { Button, IconButton } from "@chakra-ui/button";
 import {
 	FormControl,
 	FormLabel,
 	FormHelperText,
 } from "@chakra-ui/form-control";
 import { Box, Heading, HStack, Text, VStack } from "@chakra-ui/layout";
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import {
+	Input,
+	InputGroup,
+	InputLeftElement,
+	Tag,
+	TagCloseButton,
+	TagLabel,
+} from "@chakra-ui/react";
 import { Select } from "@chakra-ui/select";
-import { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Calendar } from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { AiOutlineCalendar } from "react-icons/ai";
+import { AiOutlineCalendar, AiOutlinePlus } from "react-icons/ai";
 import { Link as RouterLink } from "react-router-dom";
 import MarginBox from "../components/MarginBox";
 import {
@@ -32,6 +39,9 @@ export default function Order() {
 	const [departureDate, setDepartureDate] = useState("");
 	const [arrivalDate, setArrivalDate] = useState("");
 	const [dueDate, setDueDate] = useState("");
+	const [emails, setEmails] = useState([]);
+	const emailInput = useRef();
+
 	const {
 		register,
 		handleSubmit,
@@ -57,8 +67,21 @@ export default function Order() {
 		formData.departureDate = departureDate;
 		formData.arrivalDate = arrivalDate;
 		formData.dueDate = dueDate;
+		formData.emails = emails;
 		console.log(formData);
 	};
+
+	const emailTags = emails.map((email) => (
+		<Tag key={email}>
+			<TagLabel>{email}</TagLabel>
+			<TagCloseButton
+				onClick={() => {
+					emails.splice(emails.indexOf(email), 1);
+					setEmails([...emails]);
+				}}
+			/>
+		</Tag>
+	));
 
 	return (
 		<MarginBox minH={"100vh"}>
@@ -211,6 +234,23 @@ export default function Order() {
 						</Popover>
 						<FormHelperText>언제까지 메일을 보내드리면 될까요?</FormHelperText>
 					</FormControl>
+					<FormControl>
+						<FormLabel>이메일 주소</FormLabel>
+						<HStack>
+							<Input type="email" {...register("email")} ref={emailInput} />
+							<IconButton
+								icon={<AiOutlinePlus />}
+								onClick={() => {
+									setEmails([...emails, emailInput.current.value]);
+									emailInput.current.value = "";
+								}}
+							></IconButton>
+						</HStack>
+						<FormHelperText>
+							이메일을 여러 개 작성하실 수 있습니다.
+						</FormHelperText>
+					</FormControl>
+					<VStack>{emailTags}</VStack>
 
 					<Button type={"submit"} width={"100%"} colorScheme="twitter">
 						여행메일 신청 &rarr;
