@@ -15,3 +15,11 @@
 	animation: motion 0.4s linear 0s infinite alternate;
 	margin-bottom: 0;
 }
+#mail-example-ct {
+	transition: all 0.25s;
+}
+
+#mail-example-ct:hover {
+	transform: scale(1.1) translateY(-5%);
+	transition: all 0.25s ease-in-out;
+}

@@ -11,6 +11,7 @@ import {
 import { AiFillDownCircle } from "react-icons/ai";
 import { Link as RouterLink } from "react-router-dom";
 import MarginBox from "../components/MarginBox";
+import { Image } from "@chakra-ui/react";
 
 export default function Home() {
 	return (
@@ -76,15 +77,15 @@ export default function Home() {
 				</VStack>
 			</MarginBox>
 			<MarginBox id="service-detail-1" minH={"100vh"}>
-				<VStack paddingTop={150}>
-					<Heading marginBottom={"5"}>
+				<VStack paddingTop={120}>
+					<Heading marginBottom={"3"}>
 						원하는 여행지로의 비행편을 매일 확인해드려요!
 					</Heading>
-					<Text fontSize={"xl"}>
+					<Text fontSize={"lg"} textAlign={"center"}>
 						번거롭게 매일 비행기가 늘었는지 줄었는지 확인하기 귀찮지 않나요?
-					</Text>
-					<Text fontSize={"xl"}>까먹는 날도 분명 있을거에요.</Text>
-					<Text fontSize={"xl"}>
+						<br />
+						까먹는 날도 분명 있을거에요.
+						<br />
 						<Highlight
 							query={["비행편 현황"]}
 							styles={{
@@ -99,6 +100,15 @@ export default function Home() {
 							서비스를 만들었습니다!
 						</Highlight>
 					</Text>
+					<Box
+						id={"mail-example-ct"}
+						boxSize="md"
+						marginX={"auto"}
+						pt={7}
+						borderRadius={15}
+					>
+						<Image src="img/mail-example.png" alt="mail example" />
+					</Box>
 				</VStack>
 			</MarginBox>
 		</Box>
